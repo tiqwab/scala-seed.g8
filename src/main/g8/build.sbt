@@ -32,3 +32,13 @@ lazy val root = (project in file(".")).
     scalacOptions := commonScalacOptions,
     libraryDependencies += scalaTest % Test
   )
+
+// To execute scalafmt from sbt 0.13
+def latestScalafmt = "1.0.0-RC4"
+commands += Command.args("scalafmt", "Run scalafmt cli.") {
+  case (state, args) =>
+    val Right(scalafmt) =
+      org.scalafmt.bootstrap.ScalafmtBootstrap.fromVersion(latestScalafmt)
+    scalafmt.main("--non-interactive" +: args.toArray)
+    state
+}
