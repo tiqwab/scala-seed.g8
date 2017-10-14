@@ -1,5 +1,3 @@
-import Dependencies._
-
 // scalacOptions
 // See `scalac -help`, `scalac -X`, or `scalac -Y`
 lazy val commonScalacOptions = Seq(
@@ -21,6 +19,12 @@ lazy val commonScalacOptions = Seq(
   , "-Ywarn-unused-import" // Warn when imports are unused.
 )
 
+lazy val versions = new {
+    val logback = "1.2.3"
+    val scalaLogging = "3.7.2"
+    val scalaTest = "3.0.1"
+}
+
 lazy val root = (project in file(".")).
   settings(
     inThisBuild(List(
@@ -30,7 +34,11 @@ lazy val root = (project in file(".")).
     )),
     name := "$name$",
     scalacOptions := commonScalacOptions,
-    libraryDependencies += scalaTest % Test
+    libraryDependencies ++= Seq(
+      "ch.qos.logback" % "logback-classic" % versions.logback,
+      "com.typesafe.scala-logging" %% "scala-logging" % versions.scalaLogging,
+      "org.scalatest" %% "scalatest" % versions.scalaTest % Test
+    )
   )
 
 // To execute scalafmt from sbt 0.13
