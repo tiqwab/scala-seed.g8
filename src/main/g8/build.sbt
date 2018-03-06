@@ -4,6 +4,8 @@ lazy val commonScalacOptions = Seq(
   "-feature" // Emit warning and location for usages of features that should be imported explicitly.
   , "-deprecation" // Emit warning and location for usages of deprecated APIs.
   , "-unchecked" // Enable additional warnings where generated code depends on assumptions.
+  , "-Xfatal-warnings"
+  , "-Xlint"
   , "-encoding" // Specify encoding of source files
   , "UTF-8"
   // , "-Xfatal-warnings"
@@ -19,21 +21,25 @@ lazy val commonScalacOptions = Seq(
   , "-Ywarn-unused-import" // Warn when imports are unused.
 )
 
+lazy val commonSettings = Seq(
+  organization := "$organization$",
+  scalaVersion := "2.12.4",
+  version      := "0.1.0-SNAPSHOT",
+  scalacOptions := commonScalacOptions,
+  scalacOptions in (Compile, console) -= "-Ywarn-unused-import",
+  scalacOptions in (Test, console) = (scalacOptions in (Compile, console)).value
+)
+
 lazy val versions = new {
     val logback = "1.2.3"
     val scalaLogging = "3.7.2"
     val scalaTest = "3.0.1"
 }
 
-lazy val root = (project in file(".")).
-  settings(
-    inThisBuild(List(
-      organization := "$organization$",
-      scalaVersion := "2.12.4",
-      version      := "0.1.0-SNAPSHOT"
-    )),
+lazy val root = (project in file("."))
+  .settings(
+    commonSettings,
     name := "$name$",
-    scalacOptions := commonScalacOptions,
     libraryDependencies ++= Seq(
       "ch.qos.logback" % "logback-classic" % versions.logback,
       "com.typesafe.scala-logging" %% "scala-logging" % versions.scalaLogging,
