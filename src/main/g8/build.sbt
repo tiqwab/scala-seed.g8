@@ -4,7 +4,6 @@ lazy val commonScalacOptions = Seq(
   "-feature" // Emit warning and location for usages of features that should be imported explicitly.
   , "-deprecation" // Emit warning and location for usages of deprecated APIs.
   , "-unchecked" // Enable additional warnings where generated code depends on assumptions.
-  , "-Xfatal-warnings"
   , "-Xlint"
   , "-encoding" // Specify encoding of source files
   , "UTF-8"
@@ -26,8 +25,10 @@ lazy val commonSettings = Seq(
   scalaVersion := "2.12.4",
   version      := "0.1.0-SNAPSHOT",
   scalacOptions := commonScalacOptions,
+  scalacOptions in (Compile, console) -= "-Ywarn-unused",
   scalacOptions in (Compile, console) -= "-Ywarn-unused-import",
-  scalacOptions in (Test, console) = (scalacOptions in (Compile, console)).value
+  scalacOptions in (Compile, console) -= "-Xlint",
+  scalacOptions in (Test, console) := (scalacOptions in (Compile, console)).value
 )
 
 lazy val versions = new {
