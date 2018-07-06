@@ -22,7 +22,7 @@ lazy val commonScalacOptions = Seq(
 
 lazy val commonSettings = Seq(
   organization := "$organization$",
-  scalaVersion := "2.12.4",
+  scalaVersion := "2.12.6",
   version      := "0.1.0-SNAPSHOT",
   scalacOptions := commonScalacOptions,
   scalacOptions in (Compile, console) -= "-Ywarn-unused",
@@ -33,8 +33,8 @@ lazy val commonSettings = Seq(
 
 lazy val versions = new {
     val logback = "1.2.3"
-    val scalaLogging = "3.7.2"
-    val scalaTest = "3.0.1"
+    val scalaLogging = "3.9.0"
+    val scalaTest = "3.0.5"
 }
 
 lazy val root = (project in file("."))
